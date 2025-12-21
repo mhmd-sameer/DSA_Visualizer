@@ -6,6 +6,7 @@ import useVisualizer from "../../Hooks/useVisualizer.js";
 import Bars from "../../Components/Bars.jsx";
 import VisualizerControls from "../../Components/VisualizationControls.jsx";
 import Explanation from "../../Components/Explanation.jsx";
+import {selectionSort} from "../../Services/api.js";
 
 export default function SelectionSort() {
     const navigate = useNavigate();
@@ -38,15 +39,9 @@ export default function SelectionSort() {
 
 
 
-    async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/selection-sort", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(array),
-        });
-        const data = await res.json();
-
-        return data;
+    function fetchSteps()
+    {
+        return selectionSort(array).then(res => res.data);
     }
 
     return (

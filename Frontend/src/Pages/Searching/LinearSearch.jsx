@@ -6,6 +6,7 @@ import useVisualizer from "../../Hooks/useVisualizer.js";
 import Bars from "../../Components/Bars.jsx";
 import VisualizerControls from "../../Components/VisualizationControls.jsx";
 import Explanation from "../../Components/Explanation.jsx";
+import {linearSearch} from "../../Services/api.js";
 
 export default function LinearSearch() {
     const navigate = useNavigate();
@@ -39,23 +40,13 @@ export default function LinearSearch() {
     const [target, setTarget] = useState("");
 
 
-    async function fetchSteps() {
-        if (target === "") {
-            alert("Please enter a target value");
-            return [];
-        }
-
-        const res = await fetch("http://localhost:8080/api/algorithm/linear-search", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                array: array,
-                target: Number(target),
-            }),
-        });
-
-        return res.json();
+    function fetchSteps() {
+        return linearSearch({
+            array,
+            target: Number(target),
+        }).then(res => res.data);
     }
+
 
 
     return (

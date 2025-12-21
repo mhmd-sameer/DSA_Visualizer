@@ -6,6 +6,7 @@ import useVisualizer from "../../Hooks/useVisualizer.js";
 import Bars from "../../Components/Bars.jsx";
 import VisualizerControls from "../../Components/VisualizationControls.jsx";
 import Explanation from "../../Components/Explanation.jsx";
+import {binarySearch} from "../../Services/api.js";
 
 export default function BinarySearch() {
     const navigate = useNavigate();
@@ -40,21 +41,13 @@ export default function BinarySearch() {
     const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 
-    async function fetchSteps() {
-        const res = await fetch(
-            `${API_BASE_URL}/api/algorithm/binary-search`,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    array: array,
-                    target: Number(target),
-                }),
-            }
-        );
-
-        return res.json();
+    function fetchSteps() {
+        return binarySearch({
+            array,
+            target: Number(target),
+        }).then(res => res.data);
     }
+
 
 
     return (

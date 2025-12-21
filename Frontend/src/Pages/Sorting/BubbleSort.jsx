@@ -39,16 +39,9 @@ export default function BubbleSort() {
 
 
 
-    async function fetchSteps() {
-        try {
-            const res = await bubbleSort(array);
-            if (!res?.data) return;
-            loadSteps(res.data);
-        } catch (err) {
-            console.error("Bubble sort failed:", err);
-        }
+    function fetchSteps() {
+        return bubbleSort(array).then(res => res.data);
     }
-
 
 
     return (
