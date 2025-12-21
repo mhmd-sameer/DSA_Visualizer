@@ -80,6 +80,55 @@ export default function Algorithms() {
                     ]}
                 />
 
+                {/* LINEAR DATA STRUCTURE */}
+                <Section
+                    title="Linear Data Structure"
+                    items={[
+                        {
+                            name: "Stack",
+                            desc: "LIFO (Last In First Out) data structure",
+                            path: "/stack",
+                        },
+                        {
+                            name: "Queue",
+                            desc: "FIFO (First In First Out) data structure",
+                            path: "/queue",
+                        },
+                        {
+                            name: "Linked List",
+                            desc: "Linear collection of data elements stored at non-contiguous locations",
+                            path: "/linked-list",
+                        },
+                    ]}
+                />
+
+                {/* NON LINEAR DATA STRUCTURE*/}
+                <Section
+                    title="Non-Linear Data Structure"
+                    items={[
+                        {
+                            name: "Binary Tree",
+                            desc: "Tree data structure where each node has at most two children",
+                            path: "/binary-tree",
+                        },
+                        {
+                            name: "Binary Search Tree",
+                            desc: "Binary tree where left child is smaller and right child is larger",
+                            path: "/binary-search-tree",
+                        },
+                        {
+                            name: "Graph BFS",
+                            desc: "Traverses graph level by level using breadth-first approach",
+                            path: "/graph-bfs",
+                        },
+                        {
+                            name: "Graph DFS",
+                            desc: "Traverses graph by exploring as far as possible along each branch",
+                            path: "/graph-dfs",
+                        },
+                    ]}
+                />
+
             </main>
         </div>
     );

@@ -1,16 +1,16 @@
 import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../Components/Card.jsx";
-import Legend from "../Components/Legend.jsx";
-import useVisualizer from "../hooks/useVisualizer";
-import Bars from "../Components/Bars.jsx";
-import VisualizerControls from "../Components/VisualizationControls.jsx";
-import Explanation from "../Components/Explanation.jsx";
+import Card from "../../Components/Card.jsx";
+import Legend from "../../Components/Legend.jsx";
+import useVisualizer from "../../Hooks/useVisualizer.js";
+import Bars from "../../Components/Bars.jsx";
+import VisualizerControls from "../../Components/VisualizationControls.jsx";
+import Explanation from "../../Components/Explanation.jsx";
 
-export default function BinarySearch() {
+export default function MergeSort() {
     const navigate = useNavigate();
 
-    const initialArray = [11, 12, 22, 25, 34, 64, 90];
+    const initialArray = [64, 34, 25, 12, 22, 11, 90];
 
     const {
         array,
@@ -36,24 +36,18 @@ export default function BinarySearch() {
         applyCustomInput,
     } = useVisualizer(initialArray);
 
-    const [target,setTarget] = useState("");
+
 
     async function fetchSteps() {
-        const res = await fetch(
-            "http://localhost:8080/api/algorithm/binary-search",
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    array: array,
-                    target: Number(target),
-                }),
-            }
-        );
+        const res = await fetch("http://localhost:8080/api/algorithm/merge-sort", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(array),
+        });
+        const data = await res.json();
 
-        return res.json();
+        return data;
     }
-
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -72,9 +66,9 @@ export default function BinarySearch() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Binary Search</h1>
+                <h1 className="text-4xl font-bold mb-2">Merge Sort</h1>
                 <p className="text-gray-600 mb-8 text-xl">
-                    Search for a target value by repeatedly dividing the search space in half
+                    Divide the array into halves, sort them recursively, and merge them back together
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -85,25 +79,27 @@ export default function BinarySearch() {
                         {/* Complexity */}
                         <Card title="Complexity">
                             <p className="font-mono text-md">
-                                Time: O(log n) | Space: O(1)
+                                Time: O(n log n) | Space: O(n)
                             </p>
                         </Card>
+
 
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Binary Search works on a sorted array by repeatedly dividing the search space in half.
-                                It compares the target value with the middle element to decide which half to search next.
+                                Merge Sort is a divide-and-conquer algorithm that recursively splits the array
+                                into halves, sorts each half, and then merges the sorted halves back together.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Start with the full sorted array</li>
-                                <li>② Check the middle element</li>
-                                <li>③ If the target is smaller, search the left half</li>
-                                <li>④ If the target is larger, search the right half</li>
-                                <li>⑤ Repeat until the target is found or the range is empty</li>
+                                <li>① Divide the array into two halves</li>
+                                <li>② Recursively sort both halves</li>
+                                <li>③ Compare elements from each half</li>
+                                <li>④ Merge them in sorted order</li>
                             </ol>
                         </Card>
+
+
 
                         {/* Custom Input */}
                         <Card title="Custom Input">
@@ -118,21 +114,6 @@ export default function BinarySearch() {
                                 placeholder="e.g. 5, 2, 8, 1, 9"
                                 className="w-full border rounded-lg px-3 py-2 mb-3 disabled:bg-gray-100"
                             />
-
-                            <Card title="Target Value">
-                                <p className="text-sm text-gray-600 mb-2">
-                                    Enter the value to search for
-                                </p>
-
-                                <input
-                                    type="number"
-                                    value={target}
-                                    disabled={sorting}
-                                    onChange={(e) => setTarget(e.target.value)}
-                                    placeholder="e.g. 25"
-                                    className="w-full border rounded-lg px-3 py-2 disabled:bg-gray-100"
-                                />
-                            </Card>
 
                             <button
                                 onClick={applyCustomInput}

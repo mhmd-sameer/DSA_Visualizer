@@ -1,14 +1,13 @@
 import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../Components/Card.jsx";
-import Legend from "../Components/Legend.jsx";
-import useVisualizer from "../hooks/useVisualizer";
-import Bars from "../Components/Bars.jsx";
-import VisualizerControls from "../Components/VisualizationControls.jsx";
-import Explanation from "../Components/Explanation.jsx";
+import Card from "../../Components/Card.jsx";
+import Legend from "../../Components/Legend.jsx";
+import useVisualizer from "../../Hooks/useVisualizer.js";
+import Bars from "../../Components/Bars.jsx";
+import VisualizerControls from "../../Components/VisualizationControls.jsx";
+import Explanation from "../../Components/Explanation.jsx";
 
-
-export default function BubbleSort() {
+export default function InsertionSort() {
     const navigate = useNavigate();
 
     const initialArray = [64, 34, 25, 12, 22, 11, 90];
@@ -40,7 +39,7 @@ export default function BubbleSort() {
 
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/bubble-sort", {
+        const res = await fetch("http://localhost:8080/api/algorithm/insertion-sort", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(array),
@@ -49,7 +48,6 @@ export default function BubbleSort() {
 
         return data;
     }
-
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -68,9 +66,9 @@ export default function BubbleSort() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Bubble Sort</h1>
+                <h1 className="text-4xl font-bold mb-2">Insertion Sort</h1>
                 <p className="text-gray-600 mb-8 text-xl">
-                    Compares adjacent elements and swaps them if they are in wrong order
+                    Insert each element into its correct position in the sorted part of the array
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -88,18 +86,18 @@ export default function BubbleSort() {
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Bubble Sort repeatedly steps through the list, compares
-                                adjacent elements and swaps them if they are in the wrong
-                                order.
+                                Insertion Sort builds the sorted array one element at a time.
+                                Each new element is inserted into its correct position among the already sorted elements.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Compare adjacent elements</li>
-                                <li>② Swap if they are in wrong order</li>
-                                <li>③ Repeat until no swaps are needed</li>
-                                <li>④ Largest element moves to final position</li>
+                                <li>① Start with the second element as the key</li>
+                                <li>② Compare the key with elements to its left</li>
+                                <li>③ Shift larger elements one position to the right</li>
+                                <li>④ Insert the key into its correct position</li>
                             </ol>
                         </Card>
+
 
                         {/* Custom Input */}
                         <Card title="Custom Input">
@@ -152,19 +150,19 @@ export default function BubbleSort() {
                                         min="50"
                                         max="1000"
                                         step="50"
-                                        defaultValue={speed}
+                                        defaultValue={500}
                                         onChange={(e) => setSpeed(Number(e.target.value))}
                                     />
                                 </div>
                             )}
 
-
                             {/* Visualization Area */}
                             <Bars
-                                array={array}
-                                active={active}
-                                sorted={sorted}
+                                array = {array}
+                                active = {active}
+                                sorted = {sorted}
                             />
+
 
                             {/* Legend */}
                             <div className="flex gap-6 mt-6 text-md">
@@ -184,8 +182,6 @@ export default function BubbleSort() {
                             <Explanation explanation={explanation} />
 
                         </div>
-
-
                     </div>
 
                 </div>

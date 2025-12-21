@@ -1,16 +1,16 @@
 import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../Components/Card.jsx";
-import Legend from "../Components/Legend.jsx";
-import useVisualizer from "../hooks/useVisualizer";
-import Bars from "../Components/Bars.jsx";
-import VisualizerControls from "../Components/VisualizationControls.jsx";
-import Explanation from "../Components/Explanation.jsx";
+import Card from "../../Components/Card.jsx";
+import Legend from "../../Components/Legend.jsx";
+import useVisualizer from "../../Hooks/useVisualizer.js";
+import Bars from "../../Components/Bars.jsx";
+import VisualizerControls from "../../Components/VisualizationControls.jsx";
+import Explanation from "../../Components/Explanation.jsx";
 
-export default function SelectionSort() {
+export default function BinarySearch() {
     const navigate = useNavigate();
 
-    const initialArray = [64, 34, 25, 12, 22, 11, 90];
+    const initialArray = [11, 12, 22, 25, 34, 64, 90];
 
     const {
         array,
@@ -36,18 +36,24 @@ export default function SelectionSort() {
         applyCustomInput,
     } = useVisualizer(initialArray);
 
-
+    const [target,setTarget] = useState("");
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/selection-sort", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(array),
-        });
-        const data = await res.json();
+        const res = await fetch(
+            "http://localhost:8080/api/algorithm/binary-search",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    array: array,
+                    target: Number(target),
+                }),
+            }
+        );
 
-        return data;
+        return res.json();
     }
+
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -66,9 +72,9 @@ export default function SelectionSort() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Selection Sort</h1>
+                <h1 className="text-4xl font-bold mb-2">Binary Search</h1>
                 <p className="text-gray-600 mb-8 text-xl">
-                    Find the minimum element and place it at the beginning
+                    Search for a target value by repeatedly dividing the search space in half
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -79,22 +85,23 @@ export default function SelectionSort() {
                         {/* Complexity */}
                         <Card title="Complexity">
                             <p className="font-mono text-md">
-                                Time: O(n²) | Space: O(1)
+                                Time: O(log n) | Space: O(1)
                             </p>
                         </Card>
 
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Selection Sort divides the input list into a sorted and unsorted region.
-                                It repeatedly selects the smallest element from the unsorted region and moves it to the end of the sorted region
+                                Binary Search works on a sorted array by repeatedly dividing the search space in half.
+                                It compares the target value with the middle element to decide which half to search next.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Find the minimum element in unsorted array</li>
-                                <li>② Swap it with the first element</li>
-                                <li>③ Move the boundary of sorted array</li>
-                                <li>④ Repeat until entire array is sorted</li>
+                                <li>① Start with the full sorted array</li>
+                                <li>② Check the middle element</li>
+                                <li>③ If the target is smaller, search the left half</li>
+                                <li>④ If the target is larger, search the right half</li>
+                                <li>⑤ Repeat until the target is found or the range is empty</li>
                             </ol>
                         </Card>
 
@@ -111,6 +118,21 @@ export default function SelectionSort() {
                                 placeholder="e.g. 5, 2, 8, 1, 9"
                                 className="w-full border rounded-lg px-3 py-2 mb-3 disabled:bg-gray-100"
                             />
+
+                            <Card title="Target Value">
+                                <p className="text-sm text-gray-600 mb-2">
+                                    Enter the value to search for
+                                </p>
+
+                                <input
+                                    type="number"
+                                    value={target}
+                                    disabled={sorting}
+                                    onChange={(e) => setTarget(e.target.value)}
+                                    placeholder="e.g. 25"
+                                    className="w-full border rounded-lg px-3 py-2 disabled:bg-gray-100"
+                                />
+                            </Card>
 
                             <button
                                 onClick={applyCustomInput}

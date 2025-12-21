@@ -20,6 +20,8 @@ export default function useVisualizer(initialArray) {
     const stopRef = useRef(false);
 
     const [input, setInput] = useState(initialArray.join(", "));
+    const [pivotIndex, setPivotIndex] = useState(null);
+
 
     useEffect(() => {
         pausedRef.current = paused;
@@ -49,46 +51,58 @@ export default function useVisualizer(initialArray) {
     function applyStep(step) {
         if (!step) return;
 
+        const action = step.action?.toLowerCase();
+
+        // 🔹 Always update array snapshot & explanation
         setArray(step.array);
         setExplanation(step.explanation || "");
 
-        const action = step.action?.toLowerCase();
+        // 🔹 Reset transient states by default
+        setActive([]);
+        setPivotIndex(null);
 
-        console.log("ACTION:", step.action);
-        console.log("STEP i:", step.i, "STEP j:", step.j);
-        console.log("ACTIVE BEFORE:", active);
-
-        // 🔴 SORTING (existing)
-        if (action === "compare" || action === "swap" || action === "shift") {
-            setActive([step.i, step.j].filter(i => i !== -1));
+        // 🔴 COMPARISON / SWAP (all sorting + searching)
+        if (action === "compare" || action === "swap" || action === "check") {
+            setActive([step.i, step.j].filter(i => i >= 0));
         }
 
+        // 🟡 QUICK SORT: Pivot
+        if (action === "pivot") {
+            setPivotIndex(step.i);
+        }
+
+        // 🟢 SORTED ELEMENT (Bubble / Selection / Insertion / Quick)
         if (action === "sorted") {
             setSorted(prev =>
                 prev.includes(step.i) ? prev : [...prev, step.i]
             );
-            setActive([]);
         }
 
-        // 🔵 LINEAR SEARCH
-        if (action === "check") {
+        // 🟢 MERGE SORT: Overwrite step
+        if (action === "overwrite") {
             setActive([step.i]);
         }
 
+        // 🔵 SEARCH FOUND (Linear / Binary)
         if (action === "found") {
-            setActive([]);
-            setSorted([step.i]); // mark found index green
+            setActive([step.i]);
+            setSorted([step.i]); // mark found element
         }
 
-        // 🔵 BINARY SEARCH
-        if (action === "move_left" || action === "move_right") {
-            setActive([step.i, step.j].filter(i => i !== -1));
-        }
-
-        if (action === "not_found" || action === "done") {
+        // ⚫ SEARCH NOT FOUND / INVALID
+        if (action === "not found" || action === "invalid") {
             setActive([]);
         }
+
+        // ✅ DONE (all algorithms)
+        if (action === "done") {
+            setActive([]);
+            setPivotIndex(null);
+            setSorted(step.array.map((_, idx) => idx)); // mark ALL sorted
+        }
+
     }
+
 
 
     // 🔹 Load steps (algorithm-agnostic)
@@ -210,6 +224,7 @@ export default function useVisualizer(initialArray) {
         speed,
         input,
         explanation,
+        pivotIndex,
 
         setSpeed,
         setInput,

@@ -1,14 +1,15 @@
 
 import LandingPage from "./Pages/LandingPage.jsx";
 import InputPanel from "./Components/InputPanel.jsx";
-import SortingPage from "./Pages/SortingPage.jsx";
 import Algorithms from "./Pages/Algorithms.jsx";
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import BubbleSort from "./Pages/BubbleSort.jsx";
-import SelectionSort from "./Pages/SelectionSort.jsx";
-import InsertionSort from "./Pages/InsertionSort.jsx";
-import LinearSearch from "./Pages/LinearSearch.jsx";
-import BinarySearch from "./Pages/BinarySearch.jsx";
+import BubbleSort from "./Pages/Sorting/BubbleSort.jsx";
+import SelectionSort from "./Pages/Sorting/SelectionSort.jsx";
+import InsertionSort from "./Pages/Sorting/InsertionSort.jsx";
+import LinearSearch from "./Pages/Searching/LinearSearch.jsx";
+import BinarySearch from "./Pages/Searching/BinarySearch.jsx";
+import MergeSort from "./Pages/Sorting/MergeSort.jsx";
+import QuickSort from "./Pages/Sorting/QuickSort.jsx";
 
 export default function App (){
     return(
@@ -18,6 +19,8 @@ export default function App (){
                 <Route path={"/bubble-sort"} element={<BubbleSort />} />
                 <Route path={"/selection-sort"} element={<SelectionSort />} />
                 <Route path={"/insertion-sort"} element={<InsertionSort />} />
+                <Route path={"/merge-sort"} element={<MergeSort />} />
+                <Route path={"/quick-sort"} element={<QuickSort />} />
                 <Route path={"/linear-search"} element={<LinearSearch />} />
                 <Route path={"/binary-search"} element={<BinarySearch />} />
             </Routes>

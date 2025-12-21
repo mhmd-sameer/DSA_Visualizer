@@ -1,13 +1,13 @@
 import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../Components/Card.jsx";
-import Legend from "../Components/Legend.jsx";
-import useVisualizer from "../hooks/useVisualizer";
-import Bars from "../Components/Bars.jsx";
-import VisualizerControls from "../Components/VisualizationControls.jsx";
-import Explanation from "../Components/Explanation.jsx";
+import Card from "../../Components/Card.jsx";
+import Legend from "../../Components/Legend.jsx";
+import useVisualizer from "../../Hooks/useVisualizer.js";
+import Bars from "../../Components/Bars.jsx";
+import VisualizerControls from "../../Components/VisualizationControls.jsx";
+import Explanation from "../../Components/Explanation.jsx";
 
-export default function InsertionSort() {
+export default function QuickSort() {
     const navigate = useNavigate();
 
     const initialArray = [64, 34, 25, 12, 22, 11, 90];
@@ -39,7 +39,7 @@ export default function InsertionSort() {
 
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/insertion-sort", {
+        const res = await fetch("http://localhost:8080/api/algorithm/quick-sort", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(array),
@@ -66,10 +66,12 @@ export default function InsertionSort() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Insertion Sort</h1>
+                <h1 className="text-4xl font-bold mb-2">Quick Sort</h1>
+
                 <p className="text-gray-600 mb-8 text-xl">
                     Insert each element into its correct position in the sorted part of the array
                 </p>
+
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -79,22 +81,24 @@ export default function InsertionSort() {
                         {/* Complexity */}
                         <Card title="Complexity">
                             <p className="font-mono text-md">
-                                Time: O(n²) | Space: O(1)
+                                Average: O(n log n) | Worst: O(n²) | Space: O(log n)
                             </p>
                         </Card>
+
 
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Insertion Sort builds the sorted array one element at a time.
-                                Each new element is inserted into its correct position among the already sorted elements.
+                                Quick Sort is a divide-and-conquer algorithm that selects a pivot element
+                                and partitions the array so that elements smaller than the pivot come before it
+                                and elements larger come after it.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Start with the second element as the key</li>
-                                <li>② Compare the key with elements to its left</li>
-                                <li>③ Shift larger elements one position to the right</li>
-                                <li>④ Insert the key into its correct position</li>
+                                <li>① Choose a pivot element</li>
+                                <li>② Partition the array around the pivot</li>
+                                <li>③ Place the pivot in its correct position</li>
+                                <li>④ Recursively apply Quick Sort to left and right subarrays</li>
                             </ol>
                         </Card>
 

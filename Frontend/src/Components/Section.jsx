@@ -5,8 +5,8 @@ export default function Section({ title, items }) {
         <div className="mb-14">
 
             <div className="flex items-center gap-3 mb-6">
-                <div className="bg-blue-500 text-white p-2 rounded-xl">
-                    ⇅
+                <div className="bg-violet-600 text-white p-2 rounded-xl">
+                    {`</>`}
                 </div>
                 <h2 className="text-2xl font-bold">{title}</h2>
             </div>
