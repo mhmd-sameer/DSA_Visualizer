@@ -6,7 +6,7 @@ import useVisualizer from "../../Hooks/useVisualizer.js";
 import Bars from "../../Components/Bars.jsx";
 import VisualizerControls from "../../Components/VisualizationControls.jsx";
 import Explanation from "../../Components/Explanation.jsx";
-
+import {bubbleSort} from "../../Services/api.js"
 
 export default function BubbleSort() {
     const navigate = useNavigate();
@@ -40,15 +40,15 @@ export default function BubbleSort() {
 
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/bubble-sort", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(array),
-        });
-        const data = await res.json();
-
-        return data;
+        try {
+            const res = await bubbleSort(array);
+            if (!res?.data) return;
+            loadSteps(res.data);
+        } catch (err) {
+            console.error("Bubble sort failed:", err);
+        }
     }
+
 
 
     return (

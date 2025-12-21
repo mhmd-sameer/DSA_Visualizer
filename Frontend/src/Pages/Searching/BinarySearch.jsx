@@ -37,10 +37,12 @@ export default function BinarySearch() {
     } = useVisualizer(initialArray);
 
     const [target,setTarget] = useState("");
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
     async function fetchSteps() {
         const res = await fetch(
-            "http://localhost:8080/api/algorithm/binary-search",
+            `${API_BASE_URL}/api/algorithm/binary-search`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
