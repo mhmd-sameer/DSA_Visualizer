@@ -7,7 +7,7 @@ import Bars from "../Components/Bars.jsx";
 import VisualizerControls from "../Components/VisualizationControls.jsx";
 import Explanation from "../Components/Explanation.jsx";
 
-export default function SelectionSort() {
+export default function LinearSearch() {
     const navigate = useNavigate();
 
     const initialArray = [64, 34, 25, 12, 22, 11, 90];
@@ -36,18 +36,27 @@ export default function SelectionSort() {
         applyCustomInput,
     } = useVisualizer(initialArray);
 
+    const [target, setTarget] = useState("");
 
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/selection-sort", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(array),
-        });
-        const data = await res.json();
+        if (target === "") {
+            alert("Please enter a target value");
+            return [];
+        }
 
-        return data;
+        const res = await fetch("http://localhost:8080/api/algorithm/linear-search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                array: array,
+                target: Number(target),
+            }),
+        });
+
+        return res.json();
     }
+
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -66,9 +75,9 @@ export default function SelectionSort() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Selection Sort</h1>
+                <h1 className="text-4xl font-bold mb-2">Linear Search</h1>
                 <p className="text-gray-600 mb-8 text-xl">
-                    Find the minimum element and place it at the beginning
+                    Search for a target value by checking each element sequentially
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -79,24 +88,25 @@ export default function SelectionSort() {
                         {/* Complexity */}
                         <Card title="Complexity">
                             <p className="font-mono text-md">
-                                Time: O(n²) | Space: O(1)
+                                Time: O(n) | Space: O(1)
                             </p>
                         </Card>
 
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Selection Sort divides the input list into a sorted and unsorted region.
-                                It repeatedly selects the smallest element from the unsorted region and moves it to the end of the sorted region
+                                Linear Search checks each element in the array one by one
+                                until the target value is found or the end of the array is reached.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Find the minimum element in unsorted array</li>
-                                <li>② Swap it with the first element</li>
-                                <li>③ Move the boundary of sorted array</li>
-                                <li>④ Repeat until entire array is sorted</li>
+                                <li>① Start from the first element</li>
+                                <li>② Compare the current element with the target</li>
+                                <li>③ If it matches, the search stops</li>
+                                <li>④ If not, move to the next element</li>
                             </ol>
                         </Card>
+
 
                         {/* Custom Input */}
                         <Card title="Custom Input">
@@ -111,6 +121,20 @@ export default function SelectionSort() {
                                 placeholder="e.g. 5, 2, 8, 1, 9"
                                 className="w-full border rounded-lg px-3 py-2 mb-3 disabled:bg-gray-100"
                             />
+                            <Card title="Target Value">
+                                <p className="text-sm text-gray-600 mb-2">
+                                    Enter the value to search for
+                                </p>
+
+                                <input
+                                    type="number"
+                                    value={target}
+                                    disabled={sorting}
+                                    onChange={(e) => setTarget(e.target.value)}
+                                    placeholder="e.g. 25"
+                                    className="w-full border rounded-lg px-3 py-2 disabled:bg-gray-100"
+                                />
+                            </Card>
 
                             <button
                                 onClick={applyCustomInput}
@@ -129,7 +153,14 @@ export default function SelectionSort() {
 
                             {/* Controls */}
                             <VisualizerControls
-                                onLoad={() => loadSteps(fetchSteps)}
+
+                                onLoad={() =>{
+                                    if(target==="")
+                                    {
+                                        alert("Enter a target value first");
+                                        return ;
+                                    }
+                                    loadSteps(fetchSteps)}}
                                 onPrev={prevStep}
                                 onNext={nextStep}
                                 onPlay={play}

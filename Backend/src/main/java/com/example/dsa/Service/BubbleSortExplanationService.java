@@ -4,7 +4,7 @@ import com.example.dsa.Model.Step;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExplanationService {
+public class BubbleSortExplanationService {
 
     public String compare(int a, int b) {
         if (a <= b) {

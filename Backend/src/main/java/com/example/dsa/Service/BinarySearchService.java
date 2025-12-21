@@ -9,54 +9,125 @@ import java.util.List;
 
 @Service
 public class BinarySearchService {
-    private final ExplanationService explanationService;
 
-    public BinarySearchService(ExplanationService explanationService)
-    {
+    private final BinarySearchExplanationService explanationService;
+
+    public BinarySearchService(BinarySearchExplanationService explanationService) {
         this.explanationService = explanationService;
     }
 
-    public List<Step> generateSteps(SearchRequest request)
-    {
-        List<Integer> arr = request.getArray();
+    public List<Step> generateSteps(SearchRequest request) {
+
+        List<Integer> arr = new ArrayList<>(request.getArray());
         int target = request.getTarget();
         List<Step> steps = new ArrayList<>();
 
-        if(!SortedArray(arr))
-        {
-            steps.add(new Step(arr,"invalid",-1,-1,"Binry Search requires a sorted array"));
+        // 🔹 Validate sorted array
+        if (!isSorted(arr)) {
+            steps.add(new Step(
+                    new ArrayList<>(arr),
+                    "invalid",
+                    -1,
+                    -1,
+                    "Binary Search requires the array to be sorted."
+            ));
             return steps;
         }
-        int left = 0, right = arr.size()-1;
 
-        while(left<=right)
-        {
-            int mid = left+(right-left)/2;
+        int left = 0;
+        int right = arr.size() - 1;
 
-            steps.add(new Step(arr,"check",arr.get(mid),target,explanationService.check(target,arr.get(mid))));
-            if(arr.get(mid)==target)
-            {
+        // 🔹 Start
+        steps.add(new Step(
+                new ArrayList<>(arr),
+                "start",
+                left,
+                right,
+                explanationService.start(target)
+        ));
+
+        // 🔹 Binary search loop
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            steps.add(new Step(
+                    new ArrayList<>(arr),
+                    "check",
+                    mid,
+                    -1,
+                    explanationService.mid(mid, arr.get(mid))
+            ));
+
+            if (arr.get(mid) == target) {
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "found",
+                        mid,
+                        -1,
+                        explanationService.found(target, mid)
+                ));
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "done",
+                        -1,
+                        -1,
+                        "Binary search completed."
+                ));
+
                 return steps;
             }
-            else if(arr.get(mid)<target)
-            {
-                left=mid+1;
-            }
-            else{
-                right = mid-1;
+
+            if (arr.get(mid) < target) {
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "move_right",
+                        mid,
+                        right,
+                        explanationService.moveRight(target, arr.get(mid))
+                ));
+
+                left = mid + 1;
+            } else {
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "move_left",
+                        left,
+                        mid,
+                        explanationService.moveLeft(target, arr.get(mid))
+                ));
+
+                right = mid - 1;
             }
         }
-        steps.add(new Step(arr,"not found",target,-1,explanationService.notFound(target)));
+
+        // 🔹 Not found
+        steps.add(new Step(
+                new ArrayList<>(arr),
+                "not_found",
+                -1,
+                -1,
+                explanationService.doneNotFound(target)
+        ));
+
+        steps.add(new Step(
+                new ArrayList<>(arr),
+                "done",
+                -1,
+                -1,
+                "Binary search completed."
+        ));
+
         return steps;
     }
-    public boolean SortedArray(List<Integer> arr)
-    {
-        for(int i=0;i<arr.size()-1;i++)
-        {
-            if(arr.get(i)>arr.get(i+1))
-            {
-                return false;
-            }
+
+    private boolean isSorted(List<Integer> arr) {
+        for (int i = 0; i < arr.size() - 1; i++) {
+            if (arr.get(i) > arr.get(i + 1)) return false;
         }
         return true;
     }

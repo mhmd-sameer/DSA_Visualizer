@@ -3,7 +3,7 @@ export default function Explanation({ explanation }) {
         <div className="bg-white border rounded-xl p-4 text-gray-800 text-lg leading-relaxed">
             {explanation
                 ? explanation
-                : "Click Next or Play to see how Bubble Sort works step by step."}
+                : "Click Next or Play to see how it works step by step."}
         </div>
     );
 }

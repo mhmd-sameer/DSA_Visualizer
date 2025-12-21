@@ -6,6 +6,7 @@ import com.example.dsa.Service.BubbleSortService;
 import com.example.dsa.Service.InsertionSortService;
 import com.example.dsa.Service.LinearSearchService;
 import com.example.dsa.Service.SelectionSortService;
+import com.example.dsa.Service.BinarySearchService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,16 +21,19 @@ public class AlgorithmController {
     private final SelectionSortService selectionSortService;
     private final InsertionSortService insertionSortService;
     private final LinearSearchService linearSearchService;
+    private final BinarySearchService binarySearchService;
 
     public AlgorithmController(BubbleSortService bubbleSortService,
                                SelectionSortService selectionSortService,
                                InsertionSortService insertionSortService,
-                               LinearSearchService linearSearchService)
+                               LinearSearchService linearSearchService,
+                               BinarySearchService binarySearchService)
     {
         this.bubbleSortService = bubbleSortService;
         this.selectionSortService = selectionSortService;
         this.insertionSortService = insertionSortService;
         this.linearSearchService = linearSearchService;
+        this.binarySearchService = binarySearchService;
     }
 
     @PostMapping("/bubble-sort")
@@ -59,6 +63,6 @@ public class AlgorithmController {
     @PostMapping("/binary-search")
     public List<Step> binarySearch(@RequestBody SearchRequest request)
     {
-        return linearSearchService.generateSteps(request);
+        return binarySearchService.generateSteps(request);
     }
 }

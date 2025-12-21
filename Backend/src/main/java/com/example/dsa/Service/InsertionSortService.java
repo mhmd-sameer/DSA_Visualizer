@@ -8,33 +8,95 @@ import java.util.List;
 
 @Service
 public class InsertionSortService {
-    private final ExplanationService explanationService;
 
-    public InsertionSortService(ExplanationService explanationService)
-    {
+    private final InsertionSortExplanationService explanationService;
+
+    public InsertionSortService(InsertionSortExplanationService explanationService) {
         this.explanationService = explanationService;
     }
 
-    public List<Step> generateSteps(List<Integer> input)
-    {
+    public List<Step> generateSteps(List<Integer> input) {
+
         List<Integer> arr = new ArrayList<>(input);
         List<Step> steps = new ArrayList<>();
 
-        for(int i=1;i<arr.size();i++)
-        {
-            int j=i-1;
-            int val = arr.get(j);
+        int n = arr.size();
+        // First element is always sorted in insertion sort
+        steps.add(new Step(
+                new ArrayList<>(arr),
+                "sorted",
+                0,
+                -1,
+                "The first element is considered sorted."
+        ));
 
-            while(j>0 && arr.get(j)>val)
-            {
-                steps.add(new Step(arr,"compare",arr.get(j-1),arr.get(j),explanationService.compare(arr.get(j-1),arr.get(j))));
-                arr.set(j+1,arr.get(j));
-                steps.add(new Step(arr,"swap",arr.get(j-1),arr.get(j),explanationService.swap(arr.get(j-1),arr.get(j))));
+        for (int i = 1; i < n; i++) {
+
+            int key = arr.get(i);
+            int j = i - 1;
+
+            // Select key
+            steps.add(new Step(
+                    new ArrayList<>(arr),
+                    "select",
+                    i,
+                    -1,
+                    explanationService.selectKey(key, i)
+            ));
+
+            // Shift elements
+            while (j >= 0 && arr.get(j) > key) {
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "compare",
+                        j,
+                        j + 1,
+                        explanationService.compare(key, arr.get(j))
+                ));
+
+                arr.set(j + 1, arr.get(j));
+
+                steps.add(new Step(
+                        new ArrayList<>(arr),
+                        "shift",
+                        j,
+                        j + 1,
+                        explanationService.shift(arr.get(j))
+                ));
+
                 j--;
             }
-            arr.set(j+1,val);
+
+            // Insert key
+            arr.set(j + 1, key);
+
+            steps.add(new Step(
+                    new ArrayList<>(arr),
+                    "insert",
+                    j + 1,
+                    -1,
+                    explanationService.insert(key, j + 1)
+            ));
+
+            // Mark left side sorted
+            steps.add(new Step(
+                    new ArrayList<>(arr),
+                    "sorted",
+                    i,
+                    -1,
+                    explanationService.sorted(i)
+            ));
         }
-        steps.add(new Step(arr,"done",-1,-1,explanationService.done()));
+
+        steps.add(new Step(
+                new ArrayList<>(arr),
+                "done",
+                -1,
+                -1,
+                explanationService.done()
+        ));
+
         return steps;
     }
 }

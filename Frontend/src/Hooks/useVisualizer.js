@@ -49,15 +49,18 @@ export default function useVisualizer(initialArray) {
     function applyStep(step) {
         if (!step) return;
 
-        console.log("EXPLANATION:", step?.explanation);
-
         setArray(step.array);
         setExplanation(step.explanation || "");
 
         const action = step.action?.toLowerCase();
 
-        if (action === "compare" || action === "swap") {
-            setActive([step.i, step.j]);
+        console.log("ACTION:", step.action);
+        console.log("STEP i:", step.i, "STEP j:", step.j);
+        console.log("ACTIVE BEFORE:", active);
+
+        // 🔴 SORTING (existing)
+        if (action === "compare" || action === "swap" || action === "shift") {
+            setActive([step.i, step.j].filter(i => i !== -1));
         }
 
         if (action === "sorted") {
@@ -67,10 +70,26 @@ export default function useVisualizer(initialArray) {
             setActive([]);
         }
 
-        if (action === "done") {
+        // 🔵 LINEAR SEARCH
+        if (action === "check") {
+            setActive([step.i]);
+        }
+
+        if (action === "found") {
+            setActive([]);
+            setSorted([step.i]); // mark found index green
+        }
+
+        // 🔵 BINARY SEARCH
+        if (action === "move_left" || action === "move_right") {
+            setActive([step.i, step.j].filter(i => i !== -1));
+        }
+
+        if (action === "not_found" || action === "done") {
             setActive([]);
         }
     }
+
 
     // 🔹 Load steps (algorithm-agnostic)
     async function loadSteps(fetchStepsFn) {

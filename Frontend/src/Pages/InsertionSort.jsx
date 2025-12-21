@@ -7,7 +7,7 @@ import Bars from "../Components/Bars.jsx";
 import VisualizerControls from "../Components/VisualizationControls.jsx";
 import Explanation from "../Components/Explanation.jsx";
 
-export default function SelectionSort() {
+export default function InsertionSort() {
     const navigate = useNavigate();
 
     const initialArray = [64, 34, 25, 12, 22, 11, 90];
@@ -39,7 +39,7 @@ export default function SelectionSort() {
 
 
     async function fetchSteps() {
-        const res = await fetch("http://localhost:8080/api/algorithm/selection-sort", {
+        const res = await fetch("http://localhost:8080/api/algorithm/insertion-sort", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(array),
@@ -66,9 +66,9 @@ export default function SelectionSort() {
 
             {/* CONTENT */}
             <div className="max-w-7xl mx-auto px-6 py-10">
-                <h1 className="text-4xl font-bold mb-2">Selection Sort</h1>
+                <h1 className="text-4xl font-bold mb-2">Insertion Sort</h1>
                 <p className="text-gray-600 mb-8 text-xl">
-                    Find the minimum element and place it at the beginning
+                    Insert each element into its correct position in the sorted part of the array
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -86,17 +86,18 @@ export default function SelectionSort() {
                         {/* How it works */}
                         <Card title="How it Works">
                             <p className="text-gray-600 text-md mb-4">
-                                Selection Sort divides the input list into a sorted and unsorted region.
-                                It repeatedly selects the smallest element from the unsorted region and moves it to the end of the sorted region
+                                Insertion Sort builds the sorted array one element at a time.
+                                Each new element is inserted into its correct position among the already sorted elements.
                             </p>
 
                             <ol className="space-y-2 text-md">
-                                <li>① Find the minimum element in unsorted array</li>
-                                <li>② Swap it with the first element</li>
-                                <li>③ Move the boundary of sorted array</li>
-                                <li>④ Repeat until entire array is sorted</li>
+                                <li>① Start with the second element as the key</li>
+                                <li>② Compare the key with elements to its left</li>
+                                <li>③ Shift larger elements one position to the right</li>
+                                <li>④ Insert the key into its correct position</li>
                             </ol>
                         </Card>
+
 
                         {/* Custom Input */}
                         <Card title="Custom Input">

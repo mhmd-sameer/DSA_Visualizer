@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class BubbleSortService {
 
-    private final ExplanationService explanation;
+    private final BubbleSortExplanationService explanation;
 
-    public BubbleSortService(ExplanationService explanation) {
+    public BubbleSortService(BubbleSortExplanationService explanation) {
         this.explanation = explanation;
     }
 

@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public class SelectionSortService {
 
-    private final ExplanationService explanationService;
+    private final SelectionSortExplanationService explanationService;
 
-    public SelectionSortService(ExplanationService explanationService) {
+    public SelectionSortService(SelectionSortExplanationService explanationService) {
         this.explanationService = explanationService;
     }
 

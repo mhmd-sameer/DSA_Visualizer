@@ -8,6 +8,8 @@ public class Step {
     private String action;
     private int i;
     private int j;
+    private int left;
+    private int right;
     private String explanation;
 
     public Step(List<Integer> array,String action,int i,int j,String explanation)
