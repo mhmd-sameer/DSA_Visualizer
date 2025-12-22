@@ -1,74 +1,59 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import StackView from "../../components/StackView";
 import Explanation from "../../components/Explanation";
-import StackView from "../../Components/StackView.jsx";
-import { stackPush, stackPop, stackPeek } from "../../Services/api.js";
 
 export default function Stack() {
-    const [steps, setSteps] = useState([]);
-    const [stepIndex, setStepIndex] = useState(0);
+    const [stack, setStack] = useState([10, 20, 30]);
     const [value, setValue] = useState("");
+    const [highlight, setHighlight] = useState(stack.length - 1);
+    const [explanation, setExplanation] = useState("Top element is 30");
 
     const navigate = useNavigate();
-
-    // current step (can be undefined on first render)
-    const currentStep = steps[stepIndex];
-
-    // safe stack fallback
-    const stackArray = currentStep?.array || [10, 20, 30];
-
-    // ✅ CORRECT loadSteps (CALLS the function)
-    const loadSteps = async (fetcherFn) => {
-        try {
-            const res = await fetcherFn();
-            setSteps(res.data);
-            setStepIndex(0);
-        } catch (err) {
-            console.error("Stack API error:", err);
-        }
-    };
-
     const push = () => {
         if (!value) return;
-
-        loadSteps(() =>
-            stackPush({
-                stack: stackArray,
-                value: Number(value),
-            })
-        );
-
+        const newStack = [...stack, Number(value)];
+        setStack(newStack);
+        setHighlight(newStack.length - 1);
+        setExplanation(`Pushed ${value} to top of stack`);
         setValue("");
     };
 
     const pop = () => {
-        loadSteps(() =>
-            stackPop({
-                stack: stackArray,
-            })
-        );
+        if (stack.length === 0) {
+            setExplanation("Stack is empty");
+            return;
+        }
+        const popped = stack[stack.length - 1];
+        const newStack = stack.slice(0, -1);
+        setStack(newStack);
+        setHighlight(newStack.length - 1);
+        setExplanation(`Popped ${popped} from stack`);
     };
 
     const peek = () => {
-        loadSteps(() =>
-            stackPeek({
-                stack: stackArray,
-            })
-        );
+        if (stack.length === 0) {
+            setExplanation("Stack is empty");
+            return;
+        }
+        setHighlight(stack.length - 1);
+        setExplanation(`Top element is ${stack[stack.length - 1]}`);
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="max-w-7xl mx-auto px-10">
-
-                {/* Back button */}
-                <button
-                    onClick={() => navigate("/")}
-                    className="mb-4 text-md font-semibold text-gray-600 hover:text-black"
-                >
-                    ← Back to Dashboard
-                </button>
-
+        <div className="min-h-screen bg-gray-50">
+            {/* TOP BAR */}
+            <div className="bg-white shadow-sm">
+                <div className="max-w-7xl mx-auto px-6 py-6">
+                    <button
+                        onClick={() => navigate("/")}
+                        className="flex items-center gap-2 text-md text-gray-600 hover:text-black font-semibold"
+                    >
+                        ← Back to Dashboard
+                    </button>
+                </div>
+            </div>
+            <div className="max-w-7xl mx-auto px-6 py-10">
                 <h1 className="text-4xl font-bold">Stack</h1>
                 <p className="text-gray-600 mt-2">
                     LIFO (Last In First Out) data structure
@@ -78,19 +63,29 @@ export default function Stack() {
 
                     {/* LEFT COLUMN */}
                     <div className="space-y-6">
+
+                        {/* Complexity */}
                         <div className="bg-white rounded-xl p-6 shadow">
                             <h3 className="font-semibold text-lg mb-2">Complexity</h3>
-                            <p className="font-mono text-md">
+                            <p className="font-mono text-sm">
                                 Time: O(1) for push/pop | Space: O(n)
                             </p>
                         </div>
 
+                        {/* How it works */}
                         <div className="bg-white rounded-xl p-6 shadow">
                             <h3 className="font-semibold text-lg mb-4">How it Works</h3>
-                            <ol className="space-y-2 text-md">
+                            <p className="text-gray-600 mb-4">
+                                Stack is a linear data structure that follows LIFO (Last In First
+                                Out) principle. Elements are added and removed from the same end
+                                called the top.
+                            </p>
+
+                            <ol className="space-y-2 text-sm">
                                 <li>① Push: Add element to top</li>
                                 <li>② Pop: Remove element from top</li>
                                 <li>③ Peek: View top element</li>
+                                <li>④ IsEmpty: Check if stack is empty</li>
                             </ol>
                         </div>
                     </div>
@@ -99,9 +94,7 @@ export default function Stack() {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl p-6 shadow">
 
-                            <h3 className="font-semibold text-lg mb-4">
-                                Visualization
-                            </h3>
+                            <h3 className="font-semibold text-lg mb-4">Visualization</h3>
 
                             {/* Controls */}
                             <div className="flex items-center gap-3 mb-6">
@@ -135,17 +128,16 @@ export default function Stack() {
                             </div>
 
                             {/* Stack Visualization */}
-                            <StackView
-                                stack={stackArray}
-                                highlight={currentStep?.i}
-                            />
+                            <StackView stack={stack} highlight={highlight} />
 
-                            <div className="mt-6 text-md text-gray-600 border-t pt-4">
-                                Size: {stackArray.length}
+                            {/* Footer */}
+                            <div className="mt-6 text-sm text-gray-600 border-t pt-4">
+                                Size: {stack.length} | Operations: Push (add to top), Pop (remove
+                                from top), Peek (view top)
                             </div>
                         </div>
 
-                        <Explanation explanation={currentStep?.explanation || ""} />
+                        <Explanation explanation={explanation} />
                     </div>
                 </div>
             </div>
