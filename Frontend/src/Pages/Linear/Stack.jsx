@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-import StackView from "../../components/StackView";
-import Explanation from "../../components/Explanation";
+import StackView from "../../Components/StackView";
+import Explanation from "../../Components/Explanation";
 
 export default function Stack() {
     const [stack, setStack] = useState([10, 20, 30]);
