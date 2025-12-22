@@ -1,5 +1,6 @@
 package com.example.dsa.Controller;
 
+import com.example.dsa.Model.StackRequest;
 import com.example.dsa.Model.SearchRequest;
 import com.example.dsa.Model.Step;
 import com.example.dsa.Service.BubbleSortService;
@@ -9,6 +10,7 @@ import com.example.dsa.Service.QuickSortService;
 import com.example.dsa.Service.LinearSearchService;
 import com.example.dsa.Service.SelectionSortService;
 import com.example.dsa.Service.BinarySearchService;
+import com.example.dsa.Service.StackService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class AlgorithmController {
     private final QuickSortService quickSortService;
     private final LinearSearchService linearSearchService;
     private final BinarySearchService binarySearchService;
+    private final StackService stackService;
 
     public AlgorithmController(BubbleSortService bubbleSortService,
                                SelectionSortService selectionSortService,
@@ -33,7 +36,8 @@ public class AlgorithmController {
                                MergeSortService mergeSortService,
                                QuickSortService quickSortService,
                                LinearSearchService linearSearchService,
-                               BinarySearchService binarySearchService)
+                               BinarySearchService binarySearchService,
+                               StackService stackService)
     {
         this.bubbleSortService = bubbleSortService;
         this.selectionSortService = selectionSortService;
@@ -42,6 +46,7 @@ public class AlgorithmController {
         this.quickSortService = quickSortService;
         this.linearSearchService = linearSearchService;
         this.binarySearchService = binarySearchService;
+        this.stackService = stackService;
     }
 
     @PostMapping("/bubble-sort")
@@ -85,4 +90,5 @@ public class AlgorithmController {
     {
         return binarySearchService.generateSteps(request);
     }
+
 }

@@ -27,3 +27,11 @@ export const linearSearch = (data) =>
 export const binarySearch = (data) =>
     API.post("/binary-search", data);
 
+export const stackPush = (data) =>
+    API.post("/stack/push", data);
+
+export const stackPop = (data) =>
+    API.post("/stack/pop", data);
+
+export const stackPeek = (data) =>
+    API.post("/stack/peek", data);
