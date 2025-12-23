@@ -35,3 +35,10 @@ export const stackPop = (data) =>
 
 export const stackPeek = (data) =>
     API.post("/stack/peek", data);
+
+export const queueEnqueue = (data) =>
+    API.post("/queue/enqueue", data);
+
+export const queueDequeue = (data) =>
+    API.post("/queue/dequeue", data);
+

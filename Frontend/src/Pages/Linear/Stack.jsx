@@ -67,7 +67,7 @@ export default function Stack() {
                         {/* Complexity */}
                         <div className="bg-white rounded-xl p-6 shadow">
                             <h3 className="font-semibold text-lg mb-2">Complexity</h3>
-                            <p className="font-mono text-sm">
+                            <p className="font-mono text-md">
                                 Time: O(1) for push/pop | Space: O(n)
                             </p>
                         </div>
@@ -81,7 +81,7 @@ export default function Stack() {
                                 called the top.
                             </p>
 
-                            <ol className="space-y-2 text-sm">
+                            <ol className="space-y-2 text-md">
                                 <li>① Push: Add element to top</li>
                                 <li>② Pop: Remove element from top</li>
                                 <li>③ Peek: View top element</li>
@@ -131,7 +131,7 @@ export default function Stack() {
                             <StackView stack={stack} highlight={highlight} />
 
                             {/* Footer */}
-                            <div className="mt-6 text-sm text-gray-600 border-t pt-4">
+                            <div className="mt-6 text-md text-gray-600 border-t pt-4">
                                 Size: {stack.length} | Operations: Push (add to top), Pop (remove
                                 from top), Peek (view top)
                             </div>
