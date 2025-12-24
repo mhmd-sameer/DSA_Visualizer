@@ -11,7 +11,8 @@ import BinarySearch from "./Pages/Searching/BinarySearch.jsx";
 import MergeSort from "./Pages/Sorting/MergeSort.jsx";
 import QuickSort from "./Pages/Sorting/QuickSort.jsx";
 import Stack from "./Pages/Linear/Stack.jsx";
-import Queue from "./Pages/Linear/Queue.jsx"
+import Queue from "./Pages/Linear/Queue.jsx";
+import LinkedList from "./Pages/Linear/LinkedList.jsx";
 
 export default function App (){
     return(
@@ -27,6 +28,7 @@ export default function App (){
                 <Route path={"/binary-search"} element={<BinarySearch />} />
                 <Route path={"/stack"} element={<Stack />} />
                 <Route path={"/queue"} element={<Queue />} />
+                <Route path={"/linked-list"} element={<LinkedList />} />
             </Routes>
         </BrowserRouter>
     );

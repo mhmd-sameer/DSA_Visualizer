@@ -42,3 +42,14 @@ export const queueEnqueue = (data) =>
 export const queueDequeue = (data) =>
     API.post("/queue/dequeue", data);
 
+export const insertAtHead = (data) =>
+    API.post("/linked-list/insert-head", data);
+
+export const insertAtTail = (data) =>
+    API.post("/linked-list/insert-tail", data);
+
+export const deleteNode = (data) =>
+    API.post("/linked-list/delete", data);
+
+export const searchNode = (data) =>
+    API.post("/linked-list/search", data);
