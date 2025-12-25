@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 import Card from "../../Components/Card";
 import Explanation from "../../Components/Explanation";
 import LinkedListView from "../../Components/LinkedListView";
-import VisualizerControls from "../../Components/VisualizationControls";
 
 import useVisualizer from "../../Hooks/useVisualizer";
 import {
@@ -23,72 +22,69 @@ export default function LinkedList() {
         array,
         active,
         explanation,
-
+        steps,
+        stepIndex,
         loadSteps,
+        play,
     } = useVisualizer(initialList);
 
-    const [value, setValue] = useState("");
-    const [position, setPosition] = useState("");
 
-    // INSERT AT HEAD
+    // 🔹 Separate states (VERY IMPORTANT)
+    const [insertValue, setInsertValue] = useState("");
+    const [searchValue, setSearchValue] = useState("");
+    const [deletePosition, setDeletePosition] = useState("");
+
+
+
+    useEffect(() => {
+        if (steps.length > 0 && stepIndex === 0) {
+            play();
+        }
+    }, [steps]);
+
+    // ✅ INSERT AT HEAD
     const handleInsertHead = () => {
-        if (!value) return;
+        if (insertValue === "") return;
 
         loadSteps(() =>
             insertAtHead({
                 list: array,
-                value: Number(value),
-            }).then((res) => res.data)
+                value: Number(insertValue),
+            }).then(res => res.data)
         );
 
-        setValue("");
+        setInsertValue("");
     };
 
-    // INSERT AT TAIL
+    // ✅ INSERT AT TAIL
     const handleInsertTail = () => {
-        if (!value) return;
+        if (insertValue === "") return;
 
         loadSteps(() =>
             insertAtTail({
                 list: array,
-                value: Number(value),
-            }).then((res) => res.data)
+                value: Number(insertValue),
+            }).then(res => res.data)
         );
 
-        setValue("");
+        setInsertValue("");
     };
 
-    // DELETE AT POSITION
+    // ✅ DELETE BY POSITION
     const handleDelete = () => {
-        if (position === "") return;
+        if (deletePosition === "") return;
 
         loadSteps(() =>
             deleteNode({
                 list: array,
-                position: Number(position),
-            }).then((res) => res.data)
-        );
-
-        setPosition("");
-    };
-
-    // SEARCH
-    const handleSearch = () => {
-        if (!value) return;
-
-        loadSteps(() =>
-            searchNode({
-                list: array,
-                value: Number(value),
+                position: Number(deletePosition),
             }).then(res => res.data)
         );
 
-        setTimeout(() => play(), 100);
-
-        setValue("");
+        setDeletePosition("");
     };
 
-
+    // ✅ DELETE FROM ❌ ICON
     const handleDeleteFromNode = (pos) => {
         loadSteps(() =>
             deleteNode({
@@ -97,6 +93,20 @@ export default function LinkedList() {
             }).then(res => res.data)
         );
     };
+
+    const handleSearch = () => {
+        if (searchValue === "") return;
+
+        loadSteps(() =>
+            searchNode({
+                list: array,
+                value: Number(searchValue),
+            }).then(res => res.data)
+        );
+
+        setSearchValue("");
+    };
+
 
 
     return (
@@ -120,6 +130,7 @@ export default function LinkedList() {
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
                     {/* LEFT COLUMN */}
                     <div className="space-y-6">
                         <Card title="Complexity">
@@ -133,10 +144,10 @@ export default function LinkedList() {
 
                         <Card title="How it Works">
                             <ol className="space-y-2 text-md">
-                                <li>① Insert at Head: Add node at the beginning</li>
-                                <li>② Insert at Tail: Add node at the end</li>
-                                <li>③ Delete: Remove node at a position</li>
-                                <li>④ Search: Traverse from head</li>
+                                <li>① Insert at Head</li>
+                                <li>② Insert at Tail</li>
+                                <li>③ Delete by Position</li>
+                                <li>④ Search (Traversal)</li>
                             </ol>
                         </Card>
                     </div>
@@ -144,20 +155,16 @@ export default function LinkedList() {
                     {/* RIGHT COLUMN */}
                     <div className="lg:col-span-2">
                         <Card title="Visualization" subtitle="Backend-driven linked list">
+
                             {/* INPUT CONTROLS */}
                             <div className="flex flex-wrap items-center gap-3 mb-6">
-                                <input
-                                    value={value}
-                                    onChange={(e) => setValue(e.target.value)}
-                                    placeholder="Value"
-                                    className="border rounded-lg px-3 py-2 w-32"
-                                />
 
+                                {/* INSERT VALUE */}
                                 <input
-                                    value={position}
-                                    onChange={(e) => setPosition(e.target.value)}
-                                    placeholder="Position"
-                                    className="border rounded-lg px-3 py-2 w-28"
+                                    value={insertValue}
+                                    onChange={(e) => setInsertValue(e.target.value)}
+                                    placeholder="Insert value"
+                                    className="border rounded-lg px-3 py-2 w-32"
                                 />
 
                                 <button
@@ -169,10 +176,18 @@ export default function LinkedList() {
 
                                 <button
                                     onClick={handleInsertTail}
-                                    className="border px-4 py-2 rounded-lg"
+                                    className="bg-black text-white px-4 py-2 rounded-lg"
                                 >
                                     + Insert Tail
                                 </button>
+
+                                {/* DELETE POSITION */}
+                                <input
+                                    value={deletePosition}
+                                    onChange={(e) => setDeletePosition(e.target.value)}
+                                    placeholder="Delete pos"
+                                    className="border rounded-lg px-3 py-2 w-28"
+                                />
 
                                 <button
                                     onClick={handleDelete}
@@ -180,6 +195,14 @@ export default function LinkedList() {
                                 >
                                     🗑 Delete
                                 </button>
+
+                                {/* SEARCH */}
+                                <input
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                    placeholder="Search value"
+                                    className="border rounded-lg px-3 py-2 w-32"
+                                />
 
                                 <button
                                     onClick={handleSearch}
@@ -189,18 +212,13 @@ export default function LinkedList() {
                                 </button>
                             </div>
 
-                            {/* VISUALIZER CONTROLS */}
-
-
-                            {/* LINKED LIST VIEW */}
+                            {/* LINKED LIST VISUALIZATION */}
                             <LinkedListView
                                 list={array}
                                 highlight={active.length ? active[0] : -1}
                                 onDelete={handleDeleteFromNode}
                             />
 
-
-                            {/* FOOTER */}
                             <div className="mt-6 text-md text-gray-600 border-t pt-4">
                                 Length: {array.length}
                             </div>

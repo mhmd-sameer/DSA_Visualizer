@@ -53,3 +53,25 @@ export const deleteNode = (data) =>
 
 export const searchNode = (data) =>
     API.post("/linked-list/search", data);
+
+export const inorderTraversal = () =>
+    API.get("/binary-tree/inorder");
+
+export const preorderTraversal = () =>
+    API.get("/binary-tree/preorder");
+
+export const postorderTraversal = () =>
+    API.get("/binary-tree/postorder");
+
+export const bstInsert = (data) =>
+    API.post("/bst/insert", data);
+
+export const bstSearch = (data) =>
+    API.post("/bst/search", data);
+
+export const bfsTraversal = (data) =>
+    API.post("/graph/bfs", data);
+
+export const dfsTraversal = (data) =>
+    API.post("/graph/dfs", data);
+

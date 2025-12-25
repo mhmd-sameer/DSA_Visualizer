@@ -1,6 +1,4 @@
 
-import LandingPage from "./Pages/LandingPage.jsx";
-import InputPanel from "./Components/InputPanel.jsx";
 import Algorithms from "./Pages/Algorithms.jsx";
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import BubbleSort from "./Pages/Sorting/BubbleSort.jsx";
@@ -13,6 +11,10 @@ import QuickSort from "./Pages/Sorting/QuickSort.jsx";
 import Stack from "./Pages/Linear/Stack.jsx";
 import Queue from "./Pages/Linear/Queue.jsx";
 import LinkedList from "./Pages/Linear/LinkedList.jsx";
+import BinaryTree from "./Pages/NonLinear/BinaryTree.jsx";
+import BinarySearchTree from "./Pages/NonLinear/BinarySearchTree.jsx";
+import GraphBFS from "./Pages/NonLinear/GraphBFS.jsx";
+import GraphDFS from "./Pages/NonLinear/GraphDFS.jsx";
 
 export default function App (){
     return(
@@ -29,6 +31,10 @@ export default function App (){
                 <Route path={"/stack"} element={<Stack />} />
                 <Route path={"/queue"} element={<Queue />} />
                 <Route path={"/linked-list"} element={<LinkedList />} />
+                <Route path={"/binary-tree"} element={<BinaryTree />} />
+                <Route path={"/binary-search-tree"} element={<BinarySearchTree />} />
+                <Route path={"/graph-bfs"} element={<GraphBFS />} />
+                <Route path={"/graph-dfs"} element={<GraphDFS />} />
             </Routes>
         </BrowserRouter>
     );
