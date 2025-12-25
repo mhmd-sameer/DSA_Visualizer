@@ -1,3 +1,13 @@
+package com.example.dsa.Controller;
+
+import com.example.dsa.Model.Step;
+import com.example.dsa.Model.BinarySearchTreeRequest;
+import com.example.dsa.Service.BinarySearchTreeService;
+
+import org.springframework.web.bind.annotation.*; // 🔥 IMPORTANT
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/algorithm/bst")
 @CrossOrigin("*")

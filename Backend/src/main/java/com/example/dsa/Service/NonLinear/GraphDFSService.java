@@ -17,15 +17,11 @@ public class GraphDFSService {
 
     public List<Step> generateSteps(GraphRequest request) {
 
-        Map<Integer, List<Integer>> graph = request.getGraph();
-        int start = request.getStart();
-
         List<Step> steps = new ArrayList<>();
         Set<Integer> visited = new HashSet<>();
         Stack<Integer> stack = new Stack<>();
 
-        dfs(start, graph, visited, stack, steps);
-
+        dfs(request.getStart(), request.getGraph(), visited, stack, steps);
         return steps;
     }
 
@@ -37,40 +33,37 @@ public class GraphDFSService {
             List<Step> steps
     ) {
         stack.push(node);
-
         steps.add(new Step(
-                new ArrayList<>(),                // graph not array-based
+                new ArrayList<>(),
                 "push",
                 node,
-                new ArrayList<>(stack),
+                -1,
                 explanationService.push(node)
         ));
 
         if (visited.contains(node)) return;
 
         visited.add(node);
-
         steps.add(new Step(
                 new ArrayList<>(),
                 "visit",
                 node,
-                new ArrayList<>(stack),
+                -1,
                 explanationService.visit(node)
         ));
 
-        for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-            if (!visited.contains(neighbor)) {
-                dfs(neighbor, graph, visited, stack, steps);
+        for (int n : graph.getOrDefault(node, List.of())) {
+            if (!visited.contains(n)) {
+                dfs(n, graph, visited, stack, steps);
             }
         }
 
         stack.pop();
-
         steps.add(new Step(
                 new ArrayList<>(),
                 "pop",
                 node,
-                new ArrayList<>(stack),
+                -1,
                 explanationService.pop(node)
         ));
     }

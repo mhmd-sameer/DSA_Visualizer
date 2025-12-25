@@ -2,7 +2,8 @@ package com.example.dsa.Controller;
 
 import com.example.dsa.Model.GraphRequest;
 import com.example.dsa.Model.Step;
-import com.example.dsa.Service.GraphService;
+import com.example.dsa.Service.GraphBFSService;
+import com.example.dsa.Service.GraphDFSService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
