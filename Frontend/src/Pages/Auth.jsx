@@ -29,7 +29,7 @@ export default function Auth() {
             if (isLogin) {
                 const res = await loginUser({ email, password });
                 localStorage.setItem("token", res.data.token);
-                window.location.href = "/algorithm";
+                window.location.href = "/algorithms";
             } else {
                 await signupUser({ email, password });
                 setMessage("Signup successful. Please login.");
