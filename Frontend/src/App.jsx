@@ -32,35 +32,41 @@ export default function App() {
         <BrowserRouter>
             <Routes>
 
-                {/* PUBLIC ROUTE */}
-                <Route path={"/"} element={<LandingPage />} />
+                {/* PUBLIC ROUTES */}
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/auth" element={<Auth />} />
 
-                {/* PROTECTED ROUTES */}
-                <Route path="/algorithms" element={
-                    <PrivateRoute>
-                        <Algorithms />
-                    </PrivateRoute>
-                } />
+                {/* PROTECTED DASHBOARD */}
+                <Route
+                    path="/algorithms"
+                    element={
+                        <PrivateRoute>
+                            <Algorithms />
+                        </PrivateRoute>
+                    }
+                />
 
-                <Route path="/bubble-sort" element={<PrivateRoute><BubbleSort /></PrivateRoute>} />
-                <Route path="/selection-sort" element={<PrivateRoute><SelectionSort /></PrivateRoute>} />
-                <Route path="/insertion-sort" element={<PrivateRoute><InsertionSort /></PrivateRoute>} />
-                <Route path="/merge-sort" element={<PrivateRoute><MergeSort /></PrivateRoute>} />
-                <Route path="/quick-sort" element={<PrivateRoute><QuickSort /></PrivateRoute>} />
+                {/* SORTING */}
+                <Route path="/algorithms/bubble-sort" element={<PrivateRoute><BubbleSort /></PrivateRoute>} />
+                <Route path="/algorithms/selection-sort" element={<PrivateRoute><SelectionSort /></PrivateRoute>} />
+                <Route path="/algorithms/insertion-sort" element={<PrivateRoute><InsertionSort /></PrivateRoute>} />
+                <Route path="/algorithms/merge-sort" element={<PrivateRoute><MergeSort /></PrivateRoute>} />
+                <Route path="/algorithms/quick-sort" element={<PrivateRoute><QuickSort /></PrivateRoute>} />
 
-                <Route path="/linear-search" element={<PrivateRoute><LinearSearch /></PrivateRoute>} />
-                <Route path="/binary-search" element={<PrivateRoute><BinarySearch /></PrivateRoute>} />
+                {/* SEARCHING */}
+                <Route path="/algorithms/linear-search" element={<PrivateRoute><LinearSearch /></PrivateRoute>} />
+                <Route path="/algorithms/binary-search" element={<PrivateRoute><BinarySearch /></PrivateRoute>} />
 
-                <Route path="/stack" element={<PrivateRoute><Stack /></PrivateRoute>} />
-                <Route path="/queue" element={<PrivateRoute><Queue /></PrivateRoute>} />
-                <Route path="/linked-list" element={<PrivateRoute><LinkedList /></PrivateRoute>} />
+                {/* LINEAR DS */}
+                <Route path="/algorithms/stack" element={<PrivateRoute><Stack /></PrivateRoute>} />
+                <Route path="/algorithms/queue" element={<PrivateRoute><Queue /></PrivateRoute>} />
+                <Route path="/algorithms/linked-list" element={<PrivateRoute><LinkedList /></PrivateRoute>} />
 
-                <Route path="/binary-tree" element={<PrivateRoute><BinaryTree /></PrivateRoute>} />
-                <Route path="/binary-search-tree" element={<PrivateRoute><BinarySearchTree /></PrivateRoute>} />
-
-                <Route path="/graph-bfs" element={<PrivateRoute><GraphBFS /></PrivateRoute>} />
-                <Route path="/graph-dfs" element={<PrivateRoute><GraphDFS /></PrivateRoute>} />
+                {/* NON-LINEAR DS */}
+                <Route path="/algorithms/binary-tree" element={<PrivateRoute><BinaryTree /></PrivateRoute>} />
+                <Route path="/algorithms/binary-search-tree" element={<PrivateRoute><BinarySearchTree /></PrivateRoute>} />
+                <Route path="/algorithms/graph-bfs" element={<PrivateRoute><GraphBFS /></PrivateRoute>} />
+                <Route path="/algorithms/graph-dfs" element={<PrivateRoute><GraphDFS /></PrivateRoute>} />
 
                 {/* FALLBACK */}
                 <Route path="*" element={<Navigate to="/" />} />
