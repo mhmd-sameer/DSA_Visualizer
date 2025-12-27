@@ -51,7 +51,7 @@ export default function QuickSort() {
             <div className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-6">
                     <button
-                        onClick={() => navigate("/algorithms")}
+                        onClick={() => navigate("/algorithm")}
                         className="flex items-center gap-2 text-md text-gray-600 hover:text-black font-semibold"
                     >
                         ← Back to Dashboard
