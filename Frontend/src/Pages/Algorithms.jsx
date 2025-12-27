@@ -43,27 +43,27 @@ export default function Algorithms() {
                         {
                             name: "Bubble Sort",
                             desc: "Compares adjacent elements and swaps them if they are in wrong order",
-                            path: "/bubble-sort",
+                            path: "/algorithms/bubble-sort",
                         },
                         {
                             name: "Selection Sort",
                             desc: "Finds the minimum element and places it at the beginning",
-                            path: "/selection-sort",
+                            path: "/algorithms/selection-sort",
                         },
                         {
                             name: "Insertion Sort",
                             desc: "Builds the final sorted array one item at a time",
-                            path: "/insertion-sort",
+                            path: "/algorithms/insertion-sort",
                         },
                         {
                             name: "Merge Sort",
                             desc: "Divides array into halves, sorts them and merges them back",
-                            path: "/merge-sort",
+                            path: "/algorithms/merge-sort",
                         },
                         {
                             name: "Quick Sort",
                             desc: "Picks a pivot and partitions array around it",
-                            path: "/quick-sort",
+                            path: "/algorithms/quick-sort",
                         },
                     ]}
                 />
@@ -75,12 +75,12 @@ export default function Algorithms() {
                         {
                             name: "Linear Search",
                             desc: "Searches for an element by checking each element",
-                            path: "/linear-search",
+                            path: "/algorithms/linear-search",
                         },
                         {
                             name: "Binary Search",
                             desc: "Repeatedly divides the search interval in half",
-                            path: "/binary-search",
+                            path: "/algorithms/binary-search",
                         },
                     ]}
                 />
@@ -92,17 +92,17 @@ export default function Algorithms() {
                         {
                             name: "Stack",
                             desc: "LIFO (Last In First Out) data structure",
-                            path: "/stack",
+                            path: "/algorithms/stack",
                         },
                         {
                             name: "Queue",
                             desc: "FIFO (First In First Out) data structure",
-                            path: "/queue",
+                            path: "/algorithms/queue",
                         },
                         {
                             name: "Linked List",
                             desc: "Linear collection of data elements stored at non-contiguous locations",
-                            path: "/linked-list",
+                            path: "/algorithms/linked-list",
                         },
                     ]}
                 />
@@ -114,22 +114,22 @@ export default function Algorithms() {
                         {
                             name: "Binary Tree",
                             desc: "Tree data structure where each node has at most two children",
-                            path: "/binary-tree",
+                            path: "/algorithms/binary-tree",
                         },
                         {
                             name: "Binary Search Tree",
                             desc: "Binary tree where left child is smaller and right child is larger",
-                            path: "/binary-search-tree",
+                            path: "/algorithms/binary-search-tree",
                         },
                         {
                             name: "Graph BFS",
                             desc: "Traverses graph level by level using breadth-first approach",
-                            path: "/graph-bfs",
+                            path: "/algorithms/graph-bfs",
                         },
                         {
                             name: "Graph DFS",
                             desc: "Traverses graph by exploring as far as possible along each branch",
-                            path: "/graph-dfs",
+                            path: "/algorithms/graph-dfs",
                         },
                     ]}
                 />
