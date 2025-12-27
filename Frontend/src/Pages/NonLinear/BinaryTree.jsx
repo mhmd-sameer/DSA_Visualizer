@@ -30,7 +30,7 @@ export default function BinaryTree() {
             <div className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-6">
                     <button
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/algorithms")}
                         className="text-gray-600 font-semibold"
                     >
                         ← Back to Dashboard

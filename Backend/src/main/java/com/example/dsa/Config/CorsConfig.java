@@ -1,4 +1,4 @@
-package com.example.dsa.config;
+package com.example.dsa.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

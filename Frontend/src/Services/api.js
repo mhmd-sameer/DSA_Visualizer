@@ -75,3 +75,11 @@ export const bfsTraversal = (data) =>
 export const dfsTraversal = (data) =>
     API.post("/graph/dfs", data);
 
+
+
+export const loginUser = (data) =>
+    API.post("/api/auth/login", data);
+
+export const signupUser = (data) =>
+    API.post("/api/auth/signup", data);
+

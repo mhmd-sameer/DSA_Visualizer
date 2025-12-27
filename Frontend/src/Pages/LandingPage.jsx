@@ -1,4 +1,10 @@
+import {useNavigate} from "react-router-dom";
 export default function LandingPage (){
+
+    const navigate  = useNavigate();
+    const auth = () =>{
+        navigate("/auth");
+    }
     return (
         <div className="w-full">
 
@@ -20,7 +26,7 @@ export default function LandingPage (){
                     See how algorithms work step-by-step in real-time.
                 </p>
 
-                <button className="bg-white text-violet-700 font-semibold px-8 py-3 rounded-full hover:scale-105 transition">
+                <button onClick={auth} className="bg-white text-violet-700 font-semibold px-8 py-3 rounded-full hover:scale-105 transition">
                     Get Started ✨
                 </button>
             </section>

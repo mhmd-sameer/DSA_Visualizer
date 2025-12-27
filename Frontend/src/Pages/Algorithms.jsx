@@ -1,6 +1,11 @@
 import Section from "../Components/Section.jsx";
 
 export default function Algorithms() {
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/auth";
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
 
@@ -14,7 +19,7 @@ export default function Algorithms() {
                         <h2 className="text-xl font-bold">DSA Visualizer</h2>
                     </div>
 
-                    <button className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100">
+                    <button onClick={logout} className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-100">
                         Logout
                     </button>
                 </div>
