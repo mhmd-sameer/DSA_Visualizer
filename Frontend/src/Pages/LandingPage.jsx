@@ -24,7 +24,7 @@ export default function LandingPage (){
                     See how algorithms work step-by-step in real-time.
                 </p>
 
-                <button onClick={() => navigate("/auth")} className="bg-white text-violet-700 font-semibold px-8 py-3 rounded-full hover:scale-105 transition">
+                <button onClick={() => navigate("/algorithms")} className="bg-white text-violet-700 font-semibold px-8 py-3 rounded-full hover:scale-105 transition">
                     Get Started ✨
                 </button>
             </section>
